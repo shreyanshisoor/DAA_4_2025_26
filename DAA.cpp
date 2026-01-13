@@ -5,7 +5,7 @@
         T(n)=O(n^(log(base b)a))
         T(n)=O(n^(log(base 2)3))
 3. Operations=105
-   Depth=5
+   Depth=3
 */
 #include<bits/stdc++.h>
 using namespace std;
@@ -47,4 +47,5 @@ int main(){
     complexRec(8);
     cout<<ops<<endl;
     cout<<finalDepth<<endl;
+
 }
