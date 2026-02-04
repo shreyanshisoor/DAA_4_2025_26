@@ -1,0 +1,84 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MAX 100
+
+int h[MAX];   
+int n = 0;    
+
+void down(int i) {
+    int s = i;
+    int l = 2*i + 1;
+    int r = 2*i + 2;
+    if(l < n && h[l] < h[s]) s = l;
+    if(r < n && h[r] < h[s]) s = r;
+    if(s != i) {
+        swap(h[i], h[s]);
+        down(s);
+    }
+}
+void up(int i) {
+    while(i > 0 && h[(i-1)/2] > h[i]) {
+        swap(h[(i-1)/2], h[i]);
+        i = (i-1)/2;
+    }
+}
+void ins(int val) {
+    if(n == MAX) {
+        cout << "overflow\n";
+        return;
+    }
+    h[n] = val;
+    n++;
+    up(n-1);
+void delRoot() {
+    if(n == 0) {
+        cout << "empty heap\n";
+        return;
+    }
+    h[0] = h[n-1];
+    n--;
+    down(0);
+}
+int search(int val) {
+    for(int i=0;i<n;i++) 
+      if(h[i]==val) 
+        return i;
+    return -1;
+}
+void delVal(int val) {
+    int i = search(val);
+    if(i == -1) {
+        cout << "not found\n";
+        return;
+    }
+    h[i] = h[n-1];
+    n--;
+    down(i);
+    up(i);
+}
+void print() {
+    for(int i=0;i<n;i++) 
+      cout << h[i] << " ";
+    cout << endl;
+}
+int main() {
+    ins(10); 
+    ins(5); 
+    ins(3); 
+    ins(8);
+    ins(2);
+    cout << "Heap: "; 
+    print();
+    delRoot();
+    cout << "After deleting root: ";   
+    print();
+    delVal(8);
+    cout << "After deleting 8: "; 
+    print();
+    int x = 5;
+    int idx = search(x);
+    if(idx != -1) 
+      cout << x << " at index " << idx << endl;
+    else cout << x << " not found\n";
+}
