@@ -1,0 +1,23 @@
+[
+  { "word": "algorithm", "freq": 100 },
+  { "word": "algorithmic", "freq": 50 },
+  { "word": "alphabet", "freq": 80 },
+  { "word": "amazon", "freq": 90 },
+  { "word": "apple", "freq": 120 },
+  { "word": "application", "freq": 70 },
+  { "word": "binary", "freq": 60 },
+  { "word": "bubble sort", "freq": 40 },
+  { "word": "breadth first search", "freq": 55 },
+  { "word": "backtracking", "freq": 45 },
+  { "word": "data structure", "freq": 110 },
+  { "word": "dynamic programming", "freq": 95 },
+  { "word": "depth first search", "freq": 50 },
+  { "word": "dijkstra", "freq": 30 },
+  { "word": "graph", "freq": 85 },
+  { "word": "greedy", "freq": 75 },
+  { "word": "hash map", "freq": 65 },
+  { "word": "heap", "freq": 40 },
+  { "word": "merge sort", "freq": 55 },
+  { "word": "quick sort", "freq": 50 },
+  { "word": "trie", "freq": 150 }
+]

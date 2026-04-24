@@ -1,0 +1,6 @@
+/* style.css snippet */
+.search-container { position: relative; width: 400px; margin: 50px auto; }
+#search-input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; }
+.dropdown { position: absolute; width: 100%; background: white; border: 1px solid #ddd; border-top: none; display: none; }
+.suggestion-item { padding: 10px; cursor: pointer; border-bottom: 1px solid #eee; }
+.suggestion-item:hover { background-color: #f0f0f0; }

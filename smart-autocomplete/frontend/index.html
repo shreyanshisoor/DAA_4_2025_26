@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NexusSearch | Trie-Based Autocomplete</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --text: #1e293b; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); display: flex; flex-direction: column; align-items: center; height: 100vh; margin: 0; }
+        .hero { margin-top: 10vh; text-align: center; }
+        .search-wrapper { position: relative; width: 100%; max-width: 600px; margin-top: 2rem; }
+        #search-input { 
+            width: 100%; padding: 16px 24px; font-size: 18px; border-radius: 99px; 
+            border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            outline: none; transition: all 0.2s;
+        }
+        #search-input:focus { border-color: var(--primary); box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2); }
+        .suggestions-box { 
+            position: absolute; width: 100%; background: white; border-radius: 12px;
+            margin-top: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            overflow: hidden; display: none; z-index: 10;
+        }
+        .suggestion-item { 
+            padding: 12px 24px; cursor: pointer; display: flex; 
+            justify-content: space-between; align-items: center; transition: background 0.2s;
+        }
+        .suggestion-item:hover { background: #f1f5f9; }
+        .suggestion-item b { color: var(--primary); }
+        .freq-badge { font-size: 11px; background: #e0e7ff; color: #4338ca; padding: 2px 8px; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Nexus<span style="color:var(--primary)">Search</span></h1>
+        <p>High-performance Trie-based Prefix Retrieval</p>
+    </div>
+    <div class="search-wrapper">
+        <input type="text" id="search-input" placeholder="Start typing (e.g., 'alg', 'dat', 'tri')..." autocomplete="off">
+        <div id="suggestions" class="suggestions-box"></div>
+    </div>
+
+    <script>
+        const input = document.getElementById('search-input');
+        const box = document.getElementById('suggestions');
+
+        input.addEventListener('input', async (e) => {
+            const query = e.target.value.trim();
+            if (query.length === 0) {
+                box.style.display = 'none';
+                return;
+            }
+
+            try {
+                // Ensure your backend is running on 3000
+                const res = await fetch(`http://localhost:3000/search?q=${query}`);
+                const data = await res.json();
+
+                if (data.length > 0) {
+                    box.innerHTML = data.map(item => `
+                        <div class="suggestion-item" onclick="select('${item.word}')">
+                            <span><b>${query}</b>${item.word.substring(query.length)}</span>
+                            <span class="freq-badge">${item.freq} searches</span>
+                        </div>
+                    `).join('');
+                    box.style.display = 'block';
+                } else {
+                    box.innerHTML = `<div class="suggestion-item">No matches found</div>`;
+                    box.style.display = 'block';
+                }
+            } catch (err) {
+                console.error("Connection failed. Is the server running?");
+            }
+        });
+
+        function select(val) { input.value = val; box.style.display = 'none'; }
+    </script>
+</body>
+</html>
